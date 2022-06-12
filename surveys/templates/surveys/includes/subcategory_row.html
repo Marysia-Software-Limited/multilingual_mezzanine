@@ -1,0 +1,27 @@
+{% load mezzanine_tags %}
+
+<tr class="active">
+	<td>
+		<h5>{{ subcategory.title }}</h5>
+		{{ subcategory.description|richtext_filters|safe }}
+	</td>
+	{% for i, freq in subcategory.rating.frequencies %}
+		<td>{{ freq }}</td>
+	{% endfor %}
+	<td>{{ subcategory.rating.average|floatformat:2 }}</td>
+</tr>
+{% for question in subcategory.questions %}
+	<tr>
+		{% if question.invert_rating %}
+			<td title="† This is an inverted rating question">
+				<sup>†</sup> {{ question.prompt }}
+			</td>
+		{% else %}
+			<td>{{ question.prompt }}</td>
+		{% endif %}
+		{% for i, freq in question.rating.frequencies %}
+			<td>{{ freq }}</td>
+		{% endfor %}
+		<td>{{ question.rating.average|floatformat:2 }}</td>
+	</tr>
+{% endfor %}

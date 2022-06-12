@@ -1,0 +1,10 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags %}
+
+{% block main %}
+	{{ page.surveypage.content|richtext_filters|safe }}
+
+	<a href="{% url 'surveys:purchase_create' page.slug %}" class="btn btn-default">
+		Purchase survey ${{ page.surveypage.cost }}
+	</a>
+{% endblock main %}

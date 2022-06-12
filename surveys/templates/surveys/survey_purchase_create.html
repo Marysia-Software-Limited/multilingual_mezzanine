@@ -1,0 +1,15 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags %}
+
+{% block meta_title %}{{ survey }}{% endblock %}
+
+{% block main %}
+	<h4>Survey purchase: {{ survey }}</h4>
+
+	<form id="survey-payment-form" action="" method="POST">
+		{% errors_for form %}
+		{% fields_for form %}
+		<button type="submit" class="btn btn-warning">Submit</button>
+	</form>
+
+{% endblock main %}

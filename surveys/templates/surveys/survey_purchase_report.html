@@ -1,0 +1,44 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags %}
+
+{% block meta_title %}Survey Report{% endblock %}
+{% block title %}Report: {{ survey.title }}{% endblock %}
+
+{% block main %}
+{% with purchase.get_report_as_json as report %}
+
+	{% if report %}
+		<p><em>Generated on: {{ purchase.report_generated|date:"DATETIME_FORMAT" }}</em></p>
+		{{ survey.report_explanation|richtext_filters|safe }}
+
+		<h2>Rating results</h2>
+		<p>† Indicates inverted rating questions</p>
+		<table class="table table-hover results-table">
+			<thead>
+				<tr>
+					<th>Question</th>
+					{% for i in survey.get_rating_choices %}<th>{{ i }}</th>{% endfor %}
+					<th>Overall</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for category in report.categories %}
+				{% include "surveys/includes/category_row.html" with category=category %}
+			{% endfor %}
+			</tbody>
+		</table>
+
+		<h2>Text responses</h2>
+		{% for question in report.text_questions %}
+			<h3>{{ question.prompt }}</h3>
+			{% for text in question.responses %}{{ text|linebreaks }}<hr>{% endfor %}
+		{% empty %}
+			<h3>No responses for this survey</h3>
+		{% endfor %}
+
+	{% else %}
+		<p class="lead">Your report has not been generated yet</p>
+	{% endif %}
+
+{% endwith %}
+{% endblock main %}

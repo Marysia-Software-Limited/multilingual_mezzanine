@@ -1,0 +1,30 @@
+# main frameworks
+Django  # our base web framework
+mezzanine  # CMS framework
+
+# database
+dj-database-url  # for common database configuration
+psycopg2  # postgres database driver
+
+# i18n
+django-modeltranslation  # translation module
+django-rosetta  # translation editor for locales
+
+# Mezzanine plugins
+# mezzanine-api
+# git+http://github.com/Marysia-Software-Limited/mezzanine-surveys.git
+# mezzy
+
+# REST API
+djangorestframework
+markdown
+django-filter
+django-rest-swagger
+django-oauth-toolkit
+
+
+# helpers
+django-extensions  # common django toolbox
+Werkzeug  # debugger for django-extensions runserver_plus
+beret_utils  # personal toolbox
+django-environ  # env variables managing

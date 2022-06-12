@@ -1,0 +1,41 @@
+{% extends "pages/page.html" %}
+{% load mezzanine_tags %}
+
+{% block meta_title %}{{ survey }}{% endblock %}
+
+{% block main %}
+	<h2>{{ survey.title }}</h2>
+	{{ survey.purchase_response|richtext_filters|safe }}
+
+	{# Survey overview #}
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Date Created</th>
+					<th>Responses</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>{{ survey.publish_date|date }}</td>
+					<td>{{ purchase.responses.count }}</td>
+				</tr>
+			</tbody>
+		</table>
+
+	{# Survey link #}
+		<p>
+			<strong>Public URL</strong><br>
+			<a href="{{ purchase.get_response_create_url }}">
+				{{ request.scheme }}://{{ request.get_host }}{{ purchase.get_response_create_url }}
+			</a>
+		</p>
+		<hr>
+
+	{# Generate Report #}
+	<form action="{{ purchase.get_report_url }}" method="POST">
+		{% csrf_token %}
+		<input type="submit" class="btn btn-primary" value="Generate report">
+		<div class="help-block">Close the survey and generate report</div>
+	</form>
+{% endblock main %}

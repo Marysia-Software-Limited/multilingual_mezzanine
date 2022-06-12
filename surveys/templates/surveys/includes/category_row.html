@@ -1,0 +1,15 @@
+{% load mezzanine_tags %}
+
+<tr class="info">
+	<td>
+		<h4>{{ category.title }}</h4>
+		{{ category.description|richtext_filters|safe }}
+	</td>
+	{% for i, freq in category.rating.frequencies %}
+		<td>{{ freq }}</td>
+	{% endfor %}
+	<td>{{ category.rating.average|floatformat:2 }}</td>
+</tr>
+{% for subcategory in category.subcategories %}
+	{% include "surveys/includes/subcategory_row.html" with subcategory=subcategory %}
+{% endfor %}
