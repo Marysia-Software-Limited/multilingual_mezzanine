@@ -229,7 +229,7 @@ if DJANGO_VERSION < (1, 9):
 ################
 
 INSTALLED_APPS = (
-    'mezzanine_api',
+    'api',
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
@@ -259,7 +259,7 @@ INSTALLED_APPS = (
 # these middleware classes will be applied in the order given, and in the
 # response phase the middleware will be applied in reverse order.
 MIDDLEWARE_CLASSES = (
-    'mezzanine_api.middleware.ApiMiddleware',
+    'api.middleware.ApiMiddleware',
 
     "mezzanine.core.middleware.UpdateCacheMiddleware",
 
@@ -311,7 +311,7 @@ OPTIONAL_APPS = (
 # Use local_settings.py to customize API settings
 
 try:
-    from mezzanine_api.settings import *  # NOQA
+    from api.settings import *  # NOQA
 except ImportError:
     pass
 

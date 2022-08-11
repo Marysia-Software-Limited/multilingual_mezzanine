@@ -21,6 +21,7 @@ markdown
 django-filter
 django-rest-swagger
 django-oauth-toolkit
+drf-yasg[validation]
 
 
 # helpers

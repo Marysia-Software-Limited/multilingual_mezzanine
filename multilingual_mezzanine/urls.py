@@ -1,6 +1,6 @@
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 from django.views.i18n import set_language
 
@@ -14,6 +14,10 @@ from rosetta import urls as rosetta_urls
 from django.urls import path, include
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
+
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 # Serializers define the API representation.
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,7 +38,7 @@ router.register(r'users', UserViewSet)
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     # REST API URLs
-    # path("api/", include("mezzanine_api.urls")),
+    # path("api/", include("api.urls")),
 ]
 
 # Uncomment to use blog as home page. See also urlpatterns section below.
@@ -53,7 +57,7 @@ urlpatterns = i18n_patterns(
     # re_path(r'^rosetta/', include(rosetta_urls)),
     # path("swagger/", swagger_schema_view),
     # path('api-auth/', include('rest_framework.urls'))
-    path("api/", include("mezzanine_api.urls")),
+    path("api/", include("api.urls")),
     path("surveys/", include(("surveys.urls", "surveys"), namespace="surveys")),
 )
 
@@ -61,6 +65,25 @@ if settings.USE_MODELTRANSLATION:
     urlpatterns += [
         path("i18n", set_language, name="set_language"),
     ]
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Snippets API",
+      default_version='v1',
+      description="Test description",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=[permissions.AllowAny],
+)
+
+urlpatterns += [
+   re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+   re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+   re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+]
 
 urlpatterns += [
     # We don't want to presume how your homepage works, so here are a

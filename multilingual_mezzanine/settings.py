@@ -251,11 +251,12 @@ INSTALLED_APPS = [
     "mezzanine.forms",
     "mezzanine.galleries",
 
-    'mezzanine_api',
+    'api',
     'rest_framework',
     'django_filters',
     'rest_framework_swagger',
     'oauth2_provider',
+    'drf_yasg',
 
     "surveys",
 
@@ -283,7 +284,7 @@ MIDDLEWARE = (
     "mezzanine.pages.middleware.PageMiddleware",
     "mezzanine.core.middleware.FetchFromCacheMiddleware",
 
-    'mezzanine_api.middleware.ApiMiddleware',
+    'api.middleware.ApiMiddleware',
 )
 
 # Store these package names here as they may change in the future since
@@ -308,7 +309,7 @@ OPTIONAL_APPS = (
 # REST API SETTINGS #
 #####################
 try:
-    from mezzanine_api.settings import *
+    from api.settings import *
 except ImportError:
     pass
 
