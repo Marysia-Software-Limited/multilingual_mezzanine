@@ -27,5 +27,5 @@ drf-yasg[validation]
 # helpers
 django-extensions  # common django toolbox
 Werkzeug  # debugger for django-extensions runserver_plus
-beret_utils  # personal toolbox
+beret_utils >= 0.4.5  # personal toolbox, version 0.4.5 or above
 django-environ  # env variables managing
